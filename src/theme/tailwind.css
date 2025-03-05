@@ -1,0 +1,77 @@
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Noto Serif Variable", var(--default-font-family);
+  --font-mono: "Fire Mono", var(--default-mono-font-family);
+
+  --color-*: initial;
+  --color-neutral-50: oklch(0.985 0 0);
+  --color-neutral-100: oklch(0.97 0 0);
+  --color-neutral-200: oklch(0.922 0 0);
+  --color-neutral-300: oklch(0.87 0 0);
+  --color-neutral-400: oklch(0.708 0 0);
+  --color-neutral-500: oklch(0.556 0 0);
+  --color-neutral-600: oklch(0.439 0 0);
+  --color-neutral-700: oklch(0.371 0 0);
+  --color-neutral-800: oklch(0.269 0 0);
+  --color-neutral-900: oklch(0.205 0 0);
+  --color-neutral-950: oklch(0.145 0 0);
+
+  --gradient-rainbow: linear-gradient(
+    to right,
+    hsl(240, 100%, 75%),
+    hsl(300, 100%, 75%),
+    hsl(0, 100%, 75%),
+    hsl(30, 100%, 75%),
+    hsl(60, 100%, 75%),
+    hsl(120, 100%, 75%),
+    hsl(240, 100%, 75%)
+  );
+  --animate-bg-wave: bg-wave 2s linear infinite;
+
+  @keyframes bg-wave {
+    0% {
+      background-position-x: 0%;
+      background-size: 500% auto;
+    }
+    100% {
+      background-position-x: 125%;
+      background-size: 500% auto;
+    }
+  }
+}
+
+@layer base {
+  html,
+  body {
+    @apply bg-neutral-950 text-neutral-50 font-serif;
+  }
+}
+
+@utility typography {
+  max-width: var(--container-3xl);
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  blockquote {
+    margin-bottom: 1.2em;
+  }
+}
+
+@utility layout-content {
+  max-width: var(--container-6xl);
+  margin-inline: auto;
+  padding: calc(var(--spacing) * 3.5);
+}
+
+@utility bg-gradient-* {
+  background-image: --value(--gradient- *);
+}
+
+@utility text-rainbow {
+  @apply bg-clip-text text-transparent bg-gradient-rainbow;
+}
