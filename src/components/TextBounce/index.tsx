@@ -1,70 +1,44 @@
 import type { TextBounceProps } from "@/components/TextBounce/types";
-import { useTimeouts } from "@/hooks/useTimeouts";
 import { cx } from "class-variance-authority";
 import { motion } from "motion/react";
-import { useState, useEffect } from "react";
-
-const BOUNCE_PROPAGATION_DELAY_IN_MS = 50;
+import { useState } from "react";
 
 export function TextBounce({ children = "", ...props }: TextBounceProps) {
   const chars = children.split("");
-  const timeouts = useTimeouts();
-  const [animatedChars, setAnimatedChars] = useState<boolean[]>(
-    new Array(chars.length).fill(false)
-  );
 
-  useEffect(() => {
-    return () => timeouts.clear();
-  }, []);
-
-  const handleCharHover = (index: number) => {
-    timeouts.clear();
-
-    animatedChars.forEach((isAnimating, i) => {
-      if (isAnimating) return;
-
-      const distance = Math.abs(i - index);
-
-      timeouts.add(
-        setTimeout(() => {
-          setAnimatedChars((prev) => {
-            const newState = [...prev];
-            newState[i] = true;
-            return newState;
-          });
-        }, distance * BOUNCE_PROPAGATION_DELAY_IN_MS)
-      );
-    });
-  };
-
-  const handleAnimationComplete = (index: number) => {
-    setAnimatedChars((prev) => {
-      const newState = [...prev];
-      newState[index] = false;
-      return newState;
-    });
-  };
+  const [animation, setAnimation] = useState<"initial" | "bouncing">("initial");
 
   return (
-    <span {...props}>
+    <motion.span
+      onViewportEnter={() => setAnimation("bouncing")}
+      onHoverStart={() => setAnimation("bouncing")}
+      {...props}
+    >
       {chars.map((char, index) => (
         <motion.span
           key={index}
           className={cx("inline-block", char === " " && "w-2")}
-          onHoverStart={() => handleCharHover(index)}
-          onAnimationComplete={() => handleAnimationComplete(index)}
-          animate={{
-            y: animatedChars[index] ? [0, -8, 0] : 0,
-          }}
-          transition={{
-            duration: 0.2,
-            stiffness: 200,
-            times: [0, 0.5, 1],
+          animate={animation}
+          onAnimationComplete={() =>
+            index === chars.length - 1 && setAnimation("initial")
+          }
+          variants={{
+            initial: {
+              y: 0,
+            },
+            bouncing: {
+              y: [0, -12, 0],
+              transition: {
+                duration: 0.3,
+                delay: index * 0.03,
+                ease: "easeInOut",
+              },
+            },
           }}
         >
           {char}
         </motion.span>
       ))}
-    </span>
+    </motion.span>
   );
 }
