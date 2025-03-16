@@ -11,6 +11,7 @@
   "dependencies": {
     "@fontsource-variable/noto-serif": "^5.2.5",
     "@fontsource/fira-mono": "^5.2.5",
+    "@radix-ui/react-scroll-area": "^1.2.3",
     "@react-router/fs-routes": "^7.2.0",
     "@react-router/node": "^7.2.0",
     "@react-router/serve": "^7.2.0",

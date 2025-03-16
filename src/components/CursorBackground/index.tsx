@@ -1,4 +1,4 @@
-import { useCursor, useCursorSync } from "@/stores/cursor";
+import { useCursor } from "@/hooks/useCursor";
 import { cx } from "class-variance-authority";
 import { motion, useReducedMotion, useTransform } from "motion/react";
 import { useRef, type ComponentPropsWithoutRef } from "react";
@@ -9,11 +9,9 @@ export function CursorBackground({
   ...props
 }: ComponentPropsWithoutRef<"div">) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const cursor = useCursor();
-  const yLabel = useTransform(() => cursor.y.get() + "px");
-  const xLabel = useTransform(() => cursor.x.get() + "px");
-
-  useCursorSync(containerRef);
+  const cursor = useCursor(containerRef);
+  const yLabel = useTransform(() => Math.floor(cursor.y.get()) + "px");
+  const xLabel = useTransform(() => Math.floor(cursor.x.get()) + "px");
 
   const shouldReduceMotion = useReducedMotion();
 
@@ -22,7 +20,7 @@ export function CursorBackground({
   return (
     <div
       ref={containerRef}
-      className={"relative overflow-hidden border-neutral-800 border"}
+      className="relative h-full w-full overflow-hidden border-neutral-800 border"
     >
       <div className="pointer-events-none z-0 select-none">
         <motion.div
@@ -31,7 +29,7 @@ export function CursorBackground({
             width: cursor.x,
             left: 0,
             top: cursor.y,
-            opacity: cursor.isVisible ? 1 : 0,
+            opacity: cursor.visible ? 1 : 0,
           }}
         >
           {yLabel}
@@ -42,13 +40,13 @@ export function CursorBackground({
             height: cursor.y,
             left: cursor.x,
             top: 0,
-            opacity: cursor.isVisible ? 1 : 0,
+            opacity: cursor.visible ? 1 : 0,
           }}
         >
           {xLabel}
         </motion.div>
       </div>
-      <div className={cx("z-1 isolate", className)} {...props}>
+      <div className={cx("z-1 w-full h-full isolate", className)} {...props}>
         {children}
       </div>
     </div>

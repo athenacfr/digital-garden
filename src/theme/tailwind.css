@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@plugin 'tailwindcss-animate';
+
 @theme {
   --font-serif: "Noto Serif Variable", var(--default-font-family);
   --font-mono: "Fire Mono", var(--default-mono-font-family);
@@ -45,6 +47,10 @@
   html,
   body {
     @apply bg-neutral-950 text-neutral-50 font-serif;
+  }
+
+  ::selection {
+    @apply bg-neutral-50/20;
   }
 }
 

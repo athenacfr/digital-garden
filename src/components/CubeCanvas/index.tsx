@@ -3,6 +3,7 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Cube } from "@/components/CubeCanvas/Cube";
 import { DragControls, useCursor } from "@react-three/drei";
 import * as THREE from "three";
+import type { CanvasProps } from "@react-three/fiber";
 
 const lightIntensity = 1.5;
 
@@ -61,17 +62,16 @@ export function CubeScene() {
   );
 }
 
-export function CubeCanvas(props: ComponentPropsWithoutRef<"div">) {
+export function CubeCanvas(props: CanvasProps) {
   return (
-    <div {...props}>
-      <Canvas
-        camera={{
-          fov: 25,
-          position: [0, 0, 10],
-        }}
-      >
-        <CubeScene />
-      </Canvas>
-    </div>
+    <Canvas
+      camera={{
+        fov: 25,
+        position: [0, 0, 10],
+      }}
+      {...props}
+    >
+      <CubeScene />
+    </Canvas>
   );
 }

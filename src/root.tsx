@@ -12,6 +12,7 @@ import { Providers } from "@/components/Providers";
 
 import "@fontsource-variable/noto-serif";
 import "@fontsource/fira-mono";
+
 import "./theme/tailwind.css";
 
 export function Layout({ children }: { children: React.ReactNode }) {
@@ -23,7 +24,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body className="min-h-screen">
+      <body className="min-h-screen overflow-hidden">
         {children}
         <ScrollRestoration />
         <Scripts />
@@ -34,7 +35,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
 export default function App() {
   return (
-    <main>
+    <main className="h-full">
       <Providers>
         <Outlet />
       </Providers>
