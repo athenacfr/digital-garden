@@ -6,11 +6,11 @@ import * as THREE from "three";
 
 const lightIntensity = 1.5;
 
-export function CubeScene(props: ComponentPropsWithoutRef<"div">) {
+export function CubeScene() {
   const [drag, setDrag] = useState(false);
   const [hover, setHover] = useState(false);
 
-  const hoverMatrix = useRef(new THREE.Matrix4()).current;
+  const dragMatrix = useRef(new THREE.Matrix4());
 
   useCursor(hover, "grab", "auto");
   useCursor(drag, "grabbing", "auto");
@@ -21,9 +21,9 @@ export function CubeScene(props: ComponentPropsWithoutRef<"div">) {
       const quaternion = new THREE.Quaternion();
       const scale = new THREE.Vector3();
 
-      hoverMatrix.decompose(position, quaternion, scale);
+      dragMatrix.current.decompose(position, quaternion, scale);
       position.multiplyScalar(0.95);
-      hoverMatrix.compose(position, quaternion, scale);
+      dragMatrix.current.compose(position, quaternion, scale);
     }
   });
 
@@ -45,10 +45,10 @@ export function CubeScene(props: ComponentPropsWithoutRef<"div">) {
 
       <DragControls
         autoTransform={false}
-        matrix={hoverMatrix}
+        matrix={dragMatrix.current}
         onHover={setHover}
         onDragEnd={() => setDrag(false)}
-        onDrag={(localMatrix) => hoverMatrix.copy(localMatrix)}
+        onDrag={(localMatrix) => dragMatrix.current.copy(localMatrix)}
         dragLimits={[[-2, 2], [-2, 2], undefined]}
       >
         <Cube
