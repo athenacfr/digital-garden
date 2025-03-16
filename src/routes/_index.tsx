@@ -1,4 +1,4 @@
-import { BoxScene } from "@/components/Box";
+import { CubeCanvas } from "@/components/CubeCanvas";
 import type { Route } from "./+types/_index";
 import { CursorBackground } from "@/components/CursorBackground";
 import { TextBounce } from "@/components/TextBounce";
@@ -12,10 +12,10 @@ export default function IndexPage() {
   return (
     <div className="p-4">
       <CursorBackground className="flex lg:flex-row flex-col gap-8 items-center justify-center px-4 py-20">
-        <BoxScene className="md:size-96 sm:size-72 size-48 border border-neutral-50 border-dashed" />
+        <CubeCanvas className="md:size-96 sm:size-72 size-48 border border-neutral-50 border-dashed" />
         <div className="typography">
           <h1 className="text-2xl">
-            <TextBounce>hello internet!</TextBounce>
+            <TextBounce>internet design manifest v0.1</TextBounce>
           </h1>
           <p>
             in a digital landscape dominated by massive companies with really
