@@ -1,7 +1,5 @@
 @import "tailwindcss";
 
-@plugin 'tailwindcss-animate';
-
 @theme {
   --font-serif: "Noto Serif Variable", var(--default-font-family);
   --font-mono: "Fire Mono", var(--default-mono-font-family);
