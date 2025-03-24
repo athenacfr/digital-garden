@@ -5,8 +5,7 @@
   "scripts": {
     "build": "react-router build",
     "dev": "react-router dev",
-    "start": "react-router-serve ./build/server/index.js",
-    "typecheck": "react-router typegen && tsc"
+    "ts:check": "react-router typegen && tsc"
   },
   "dependencies": {
     "@fontsource-variable/noto-serif": "^5.2.5",

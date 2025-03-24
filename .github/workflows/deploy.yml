@@ -26,9 +26,8 @@ jobs:
         run: pnpm run build
 
       - name: Upload production build artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-pages-artifact@v3
         with:
-          name: "production-build-artifact"
           path: ./build/client
 
   deploy:
@@ -47,5 +46,3 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v4
-        with:
-          artifact_name: "production-build-artifact"
